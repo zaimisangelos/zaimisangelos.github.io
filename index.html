@@ -301,7 +301,7 @@ body:has(.sec--extra:target) .hero,body:has(.sec--extra:target) .toc,body:has(.s
 .back{font-size:14px;font-weight:700}
 @media (min-width:940px){.sec--extra .sec__grid{grid-template-columns:minmax(0,1fr);gap:22px}.sec--extra .sec__head{position:static}}
 .back a{text-decoration:none}
-.foot{background:var(--navy);color:#cfdaec;font-size:13px;line-height:1.8;padding:28px 0 36px}
+.foot{background:var(--navy);color:#cfdaec;font-size:13px;line-height:1.8;padding:28px 0 104px}
 </style>
 </head>
 <body>
@@ -845,7 +845,7 @@ body:has(.sec--extra:target) .hero,body:has(.sec--extra:target) .toc,body:has(.s
     <header class="sec__head sec__head--plain"><h2>AIチャットボット</h2><span class="sec__en" lang="en">AI chatbot and AI disclosure</span></header>
     <div class="sec__body">
       <p class="back"><a href="#top">← 研究のページに戻る</a></p>
-      <p>この研究について、AIチャットボットに質問できます。アンジェロス・ザイミスの論文をもとに、AIが日本語と英語で回答します(2026年11月26日まで)。</p>
+      <p>この研究について、AIチャットボットに質問できます。アンジェロス・ザイミスの論文をもとに、AIが日本語と英語で回答します(2026年11月26日まで)。画面の右下にあるボタンからも質問できます。</p>
       <div class="ask">
         <a class="btn" href="https://www.chatbase.co/aQWqxhPVbUd1MzmxS3LBR/help" target="_blank" rel="noopener">ザイミスの研究についてAIに質問する<span aria-hidden="true"> ↗</span></a>
       </div>
@@ -930,7 +930,8 @@ body:has(.sec--extra:target) .hero,body:has(.sec--extra:target) .toc,body:has(.s
       <p>このページとAIチャットボットを運営しているのは、著者個人(アンジェロス・ザイミス)です。利用者の情報がどう扱われるかを説明します。</p>
       <h3 class="sub">このページ</h3>
       <ul class="points">
-        <li>このページには、入力フォームも、著者が設置したアクセス解析もありません。著者がこのページを通じて、閲覧者の情報を集めることはありません。</li>
+        <li>このページには、AIチャットボットを除いて、入力フォームはありません。著者が設置したアクセス解析もありません。AIチャットボットに入力された内容を除いて、著者がこのページを通じて閲覧者の情報を集めることはありません。</li>
+        <li>画面の隅にAIチャットボットのボタンを表示するために、Chatbase 社のプログラムを読み込んでいます。そのため、チャットボットを使わない場合でも、ページを開くと、IPアドレスなどの技術的な情報が Chatbase 社に送られます。</li>
         <li>このページを開くと、ページを配信しているサービスと、文字の表示に使っている Google Fonts に、IPアドレスなどの技術的な情報が送られます。その扱いは、各社の方針によります。</li>
       </ul>
       <h3 class="sub">AIチャットボット</h3>
@@ -962,5 +963,8 @@ body:has(.sec--extra:target) .hero,body:has(.sec--extra:target) .toc,body:has(.s
   </div>
 </footer>
 
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="aQWqxhPVbUd1MzmxS3LBR";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
 </body>
 </html>
