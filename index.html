@@ -35,7 +35,7 @@
   color-scheme:light;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:60px}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:60px}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.85;line-break:strict;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
 p,ul,ol,dl,dd{margin:0;padding:0}
 ul,ol{list-style:none}
@@ -299,6 +299,7 @@ i.sw-a{background:var(--recourse-ink)} i.sw-b{background:var(--recourse-tint)} i
 .sec--extra:target{display:block;border-top:0}
 body:has(.sec--extra:target) .hero,body:has(.sec--extra:target) .toc,body:has(.sec--extra:target) .kf,body:has(.sec--extra:target) main > .sec:not(:target){display:none}
 .back{font-size:14px;font-weight:700}
+@media (max-width:600px){#chatbase-bubble-button{width:55px!important}#chatbase-bubble-label{display:none!important}}
 @media (min-width:940px){.sec--extra .sec__grid{grid-template-columns:minmax(0,1fr);gap:22px}.sec--extra .sec__head{position:static}}
 .back a{text-decoration:none}
 .foot{background:var(--navy);color:#cfdaec;font-size:13px;line-height:1.8;padding:28px 0 104px}
