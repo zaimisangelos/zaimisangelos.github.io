@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>リリース前の審査、リリース後の救済は?</title>
+<meta name="description" content="日本のテクノロジー企業18社は、AIのリリース前の審査と、リリース後の救済の経路を、公開資料にどこまで書いているか。SFC Open Research Forum 2026 展示の日本語解説。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Plan: the companion to the printed poster. One reading column beside a section rail.
+     Every count of firms is a row of cells, 1 cell = 1 firm:
+     solid = 明記 (stated), tint = 一部明記 (partly), hollow = 確認できず (not located).
+     Blue is review before release, orange is recourse after, as on the poster. */
+  --paper:#ffffff;
+  --wash:#eef1f6;
+  --ink:#131b2b;
+  --muted:#535d70;
+  --rule:#c6ccd8;
+  --hollow:#98a2b3;
+  --navy:#15305b;
+  --navy-tint:#aab8cf;
+  --review:#1f5fae;
+  --review-tint:#a9c4e8;
+  --recourse:#e8632b;
+  --recourse-ink:#b4431a;
+  --recourse-tint:#f5b595;
+  --tie:#8a93a3;
+  --on-navy-review:#a9c8f2;
+  --on-navy-recourse:#ff9a63;
+  --display:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP","Noto Serif CJK JP",serif;
+  --body:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Noto Sans JP","Noto Sans CJK JP",sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:60px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.85;line-break:strict;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+p,ul,ol,dl,dd{margin:0;padding:0}
+ul,ol{list-style:none}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:700;line-height:1.45;font-feature-settings:"palt";text-wrap:balance;word-break:auto-phrase}
+a{color:var(--review);text-underline-offset:3px}
+a:focus-visible{outline:3px solid var(--recourse);outline-offset:2px;border-radius:2px}
+i{font-style:normal}
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:clamp(18px,5vw,44px)}
+.en{font-family:var(--body)}
+
+/* ---------- hero ---------- */
+.hero{background:var(--navy);color:#fff;padding:20px 0 clamp(34px,6vw,60px)}
+.hero__top{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:500;letter-spacing:.06em;color:#cfdaec}
+.pill{border:1px solid currentColor;border-radius:999px;padding:0 11px;font-weight:700;font-size:12px;letter-spacing:.12em;line-height:1.9}
+.hero h1{font-weight:800;font-size:clamp(26px,8.4vw,74px);line-height:1.25;letter-spacing:.01em;margin-top:clamp(30px,6vw,58px)}
+.hero h1 .l{display:block}
+.w-solid{color:var(--on-navy-review)}
+.w-hollow{color:var(--on-navy-recourse)}
+@supports (-webkit-text-stroke:1px #000){
+  .w-hollow{color:transparent;-webkit-text-stroke:.024em var(--on-navy-recourse)}
+}
+.hero__sub{font-family:var(--display);font-weight:500;font-size:clamp(15px,2.2vw,21px);line-height:1.6;letter-spacing:.03em;color:#e4ebf6;margin-top:14px;word-break:auto-phrase}
+.hero__lead{max-width:36em;margin-top:22px;font-size:clamp(15.5px,1.6vw,17.5px);color:#f3f6fb}
+.hero__note{max-width:38em;margin-top:12px;font-size:13px;line-height:1.7;color:#cfdaec}
+
+.axis{display:grid;grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr);row-gap:9px;margin-top:clamp(30px,5vw,44px);max-width:740px}
+.axis__when{font-size:12px;font-weight:700;letter-spacing:.14em;line-height:1;color:#cfdaec;white-space:nowrap}
+.axis__when--mid{grid-column:2;justify-self:center;color:#fff}
+.axis__when--end{grid-column:3;justify-self:end}
+.axis__line{grid-row:2;align-self:center;height:0}
+.axis__line--solid{grid-column:1;border-top:4px solid var(--on-navy-review);transform-origin:left center}
+.axis__line--dashed{grid-column:3;border-top:4px dashed var(--on-navy-recourse)}
+.axis__gate{grid-row:2;grid-column:2;justify-self:center;align-self:center;width:12px;height:12px;background:#fff;transform:rotate(45deg)}
+.axis__cap{grid-row:3;font-size:13.5px;line-height:1.65;color:#e4ebf6;padding-right:14px}
+.axis__cap--end{grid-column:3;padding:0 0 0 14px}
+.axis__tag{display:table;font-size:13px;line-height:1;letter-spacing:.1em;padding:5px 8px;margin:2px 0 7px}
+.axis__tag--rv{background:var(--on-navy-review);color:var(--navy)}
+.axis__tag--rc{color:var(--on-navy-recourse);box-shadow:inset 0 0 0 1.5px var(--on-navy-recourse)}
+@media (prefers-reduced-motion:no-preference){
+  .axis__line--solid{animation:grow .7s cubic-bezier(.2,.7,.2,1) .1s backwards}
+  .axis__line--dashed{animation:step-out 1.2s steps(7,end) .8s backwards}
+}
+@keyframes grow{from{transform:scaleX(.35)}to{transform:scaleX(1)}}
+@keyframes step-out{from{clip-path:inset(-4px 72% -4px 0)}to{clip-path:inset(-4px 0 -4px 0)}}
+
+.hero__by{margin-top:clamp(28px,4vw,40px);display:flex;flex-wrap:wrap;gap:2px 14px;align-items:baseline;font-size:14px;color:#e4ebf6}
+.hero__by b{font-size:16px;color:#fff}
+.hero__en{margin-top:8px;font-size:12.5px;line-height:1.6;color:#b9c7dd;max-width:44em}
+
+/* ---------- contents bar ---------- */
+.toc{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);border-bottom:1px solid var(--rule)}
+.toc__in{display:flex;gap:2px;overflow-x:auto;padding-block:7px;scrollbar-width:none}
+.toc__in::-webkit-scrollbar{display:none}
+.toc a{flex:none;font-size:13px;font-weight:700;line-height:1;color:var(--navy);text-decoration:none;padding:9px 11px;border-radius:999px;white-space:nowrap}
+.toc a:hover{background:var(--wash)}
+
+/* ---------- cells: 1 cell = 1 firm ---------- */
+.strip{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:3px;width:100%;max-width:calc(var(--n)*var(--cell,18px))}
+.strip i{display:block;aspect-ratio:1;border-radius:2px}
+i.s-rv{background:var(--review)} i.p-rv{background:var(--review-tint)}
+i.s-rc{background:var(--recourse)} i.p-rc{background:var(--recourse-tint)}
+i.s-nv{background:var(--navy)} i.p-nv{background:var(--navy-tint)}
+i.tie{background:var(--tie)}
+i.e{box-shadow:inset 0 0 0 1.5px var(--hollow)}
+i.k1{background:var(--navy)} i.k2{background:#5b7db4} i.k3{background:var(--navy-tint)}
+i.sw-a{background:var(--recourse-ink)} i.sw-b{background:var(--recourse-tint)} i.sw-z{background:#d9dee7}
+.legend{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13px;line-height:1.7;color:var(--muted)}
+.legend i{display:inline-block;width:13px;height:13px;border-radius:2px;vertical-align:-2px;margin-right:6px}
+.legend i + i{margin-left:-3px}
+.legend b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ---------- key findings ---------- */
+.kf{background:var(--wash);padding:clamp(30px,5vw,52px) 0}
+.kf__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;margin-bottom:24px}
+.kf__head h2{font-size:clamp(23px,3vw,29px);color:var(--navy)}
+.kf__grid{display:grid;gap:28px}
+@media (min-width:860px){.kf__grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}}
+.kf__item{border-left:3px solid var(--navy);padding-left:16px;display:flex;flex-direction:column;gap:10px}
+.kf__num{font-weight:700;font-size:19px;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+.kf__num b{font-size:clamp(54px,7vw,66px);letter-spacing:-.02em;margin-right:4px}
+.kf__text{font-size:15px;line-height:1.75;word-break:auto-phrase}
+.kf__foot{margin-top:26px}
+.kf__foot + .note{margin-top:6px}
+
+/* ---------- sections ---------- */
+.sec{padding-block:clamp(44px,7vw,80px);border-top:1px solid var(--rule)}
+.sec__grid{display:grid;gap:22px}
+.sec__head{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;align-items:center}
+.sec__head--plain{grid-template-columns:minmax(0,1fr)}
+.sec__no{display:grid;place-items:center;min-width:36px;height:36px;background:var(--navy);color:#fff;font-weight:700;font-size:18px;line-height:1;font-variant-numeric:tabular-nums}
+.sec__head h2{font-size:clamp(25px,3.4vw,31px);color:var(--navy)}
+.sec__en{grid-column:-2/-1;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+@media (min-width:940px){
+  .sec__grid{grid-template-columns:220px minmax(0,1fr);gap:56px}
+  .sec__head{position:sticky;top:66px;align-self:start;grid-template-columns:minmax(0,1fr);row-gap:10px;justify-items:start}
+  .sec__en{grid-column:1}
+}
+.sec__body{max-width:720px;display:flex;flex-direction:column;gap:20px}
+.sec__body > p,.fig > p{max-width:38em}
+.lede{font-family:var(--display);font-weight:500;font-size:clamp(18px,2.2vw,21px);line-height:1.85;color:var(--navy)}
+.note{font-size:13.5px;line-height:1.7;color:var(--muted)}
+.take{border-left:3px solid var(--navy);padding-left:14px;font-weight:500}
+
+.chain{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:700px){.chain{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.chain li{background:var(--wash);padding:11px 12px 12px;font-weight:700;font-size:14.5px;line-height:1.5;display:flex;flex-direction:column;gap:3px}
+.chain span{font-size:12px;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+
+.qs{counter-reset:q;max-width:40em;border-bottom:1px solid var(--rule)}
+.qs li{counter-increment:q;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;padding:14px 0;border-top:1px solid var(--rule);font-weight:500}
+.qs li::before{content:"問" counter(q);font-family:var(--display);font-weight:700;color:var(--navy);white-space:nowrap}
+
+.flow{display:grid;max-width:540px}
+.flow__step{border:2px solid var(--navy);padding:9px 16px 11px}
+.flow__step b{display:block;font-size:17px;line-height:1.55;color:var(--navy)}
+.flow__step span{display:block;font-size:14px;line-height:1.6;color:var(--muted)}
+.flow__arrow{justify-self:center;width:0;height:0;margin:4px 0;border-left:9px solid transparent;border-right:9px solid transparent;border-top:9px solid var(--navy)}
+
+.codes{display:grid;gap:10px;max-width:38em}
+.codes li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:12px;align-items:start}
+.codes i{display:block;width:18px;height:18px;border-radius:2px;margin-top:6px}
+.codes b{margin-right:6px}
+.codes .en{font-size:12px;color:var(--muted);margin-right:8px}
+.sub{font-family:var(--body);font-size:16px;font-weight:700;line-height:1.5;color:var(--navy);margin-top:8px}
+
+/* ---------- figures and tables ---------- */
+.jump{display:flex;flex-wrap:wrap;gap:6px}
+.jump a{font-size:13px;font-weight:700;line-height:1;text-decoration:none;color:var(--navy);padding:8px 11px;box-shadow:inset 0 0 0 1.5px var(--navy)}
+.jump a:hover{background:var(--wash)}
+.fig{border-top:2px solid var(--navy);padding-top:14px;margin-top:22px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:60px}
+.fig__head{display:flex;gap:12px;align-items:flex-start}
+.fig__no{flex:none;background:var(--navy);color:#fff;font-weight:700;font-size:13px;line-height:1;letter-spacing:.06em;padding:6px 8px;margin-top:5px;white-space:nowrap}
+.fig h3{font-size:clamp(18px,2.3vw,21px);line-height:1.55}
+
+.series{display:grid;gap:6px;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.series li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start}
+.tag{display:inline-block;align-self:start;font-size:12px;font-weight:700;line-height:1;letter-spacing:.08em;color:#fff;padding:5px 7px;margin-top:4px;white-space:nowrap}
+.tag--rv{background:var(--review)}
+.tag--rc{background:var(--recourse-ink)}
+
+.pair{border-top:1px solid var(--ink);padding-top:9px}
+.pair__no{font-size:12px;font-weight:700;letter-spacing:.14em;line-height:1.4;color:var(--navy)}
+.pair > .note{padding-bottom:10px}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 12px;padding:10px 0 13px}
+.row + .row{border-top:1px dashed var(--rule)}
+.row__viz{grid-column:1/-1;display:flex;flex-direction:column;gap:5px}
+@media (min-width:700px){
+  .row{grid-template-columns:auto minmax(0,1fr) 324px;column-gap:16px;align-items:center}
+  .row .tag{margin-top:0;align-self:center}
+  .row__viz{grid-column:auto}
+}
+.row__name{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:8px;font-weight:700;line-height:1.5}
+.row__name .en{font-weight:400;font-size:12px;color:var(--muted)}
+.row__desc{font-size:14px;line-height:1.6;color:var(--muted)}
+.cnt{font-size:13.5px;line-height:1.4;font-variant-numeric:tabular-nums}
+.cnt b{font-size:19px;margin-right:1px}
+.cnt__p{color:var(--muted);margin-left:10px}
+
+.marked{position:relative;max-width:calc(18*18px);padding-top:28px;margin-bottom:6px}
+.marked__label{position:absolute;top:0;left:calc(100%*12/18);transform:translateX(-50%);white-space:nowrap;font-size:12px;font-weight:700;line-height:1}
+.marked::after{content:"";position:absolute;left:calc(100%*12/18 - .5px);top:16px;bottom:-6px;width:2px;background:var(--ink)}
+
+.avg{display:grid;gap:8px;max-width:520px}
+.avg__row{display:grid;grid-template-columns:2.6em minmax(0,1fr) 3em;gap:10px;align-items:center}
+.avg__k{font-size:13px;font-weight:700}
+.avg__track{display:block;height:22px;border-right:1px solid var(--rule);background:linear-gradient(to right,var(--rule) 1px,transparent 1px) 0 0/calc(100%/6) 100% repeat-x,var(--wash)}
+.avg__fill{display:block;height:100%}
+.avg__fill--rv{background:var(--review)}
+.avg__fill--rc{background:var(--recourse)}
+.avg__v{font-size:17px;line-height:1;text-align:right;font-variant-numeric:tabular-nums}
+.avg__ticks{display:flex;justify-content:space-between;font-size:11px;line-height:1;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.stack{display:flex;gap:2px;height:36px;max-width:560px}
+.seg{display:grid;place-items:center;min-width:0;font-weight:700;font-size:14px;line-height:1;font-variant-numeric:tabular-nums}
+.seg--a{background:var(--recourse-ink);color:#fff}
+.seg--b{background:var(--recourse-tint);color:var(--ink)}
+.seg--z{background:#d9dee7;color:var(--ink)}
+
+.firms{border-bottom:1px solid var(--rule)}
+.firm{display:grid;gap:4px;padding:13px 0;border-top:1px solid var(--rule)}
+@media (min-width:700px){.firm{grid-template-columns:170px minmax(0,1fr);gap:20px}}
+.firm__name{font-weight:700;line-height:1.5}
+.firm__name .en{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.state{display:inline-block;font-size:12px;font-weight:700;line-height:1;letter-spacing:.04em;padding:5px 8px;margin-right:10px;white-space:nowrap;vertical-align:2px}
+.state--s{background:var(--navy);color:#fff}
+.state--p{background:var(--navy-tint);color:var(--ink)}
+.state--e{box-shadow:inset 0 0 0 1.5px var(--navy);color:var(--navy)}
+
+.named{display:grid;gap:18px}
+.named__head{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:10px;font-weight:700;line-height:1.6;margin-bottom:8px}
+.named__group{display:grid;grid-template-columns:5em minmax(0,1fr);gap:8px;align-items:start;padding:7px 0;border-top:1px dashed var(--rule)}
+.named__k{font-size:13px;color:var(--muted);line-height:1.5;padding-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13.5px;font-weight:700;line-height:1.3;padding:5px 10px;border-radius:2px}
+.chip--rv{background:var(--review);color:#fff}
+.chip--rc{background:var(--recourse-ink);color:#fff}
+.chip--no{font-weight:500;color:var(--muted);box-shadow:inset 0 0 0 1.5px var(--hollow)}
+.chip small{font-size:12px;font-weight:400;margin-left:6px}
+
+/* ---------- conclusion diagram ---------- */
+.link{display:grid;max-width:680px}
+.link__box{border:3px solid;padding:11px 16px 13px;display:flex;flex-direction:column;gap:2px;font-size:14.5px;line-height:1.6}
+.link__box b{font-family:var(--display);font-size:20px;line-height:1.4}
+.link__box--rv{border-color:var(--review)} .link__box--rv b{color:var(--review)}
+.link__box--rc{border-color:var(--recourse)} .link__box--rc b{color:var(--recourse-ink)}
+.link__gap{display:flex;align-items:center;gap:14px;min-height:66px;padding-left:30px;font-weight:700;font-size:14px;line-height:1.5}
+.link__gap::before{content:"";align-self:stretch;border-left:3px dashed var(--muted)}
+@media (min-width:700px){
+  .link{grid-template-columns:minmax(0,1fr) 150px minmax(0,1fr)}
+  .link__gap{flex-direction:column-reverse;justify-content:center;gap:8px;min-height:0;padding:0 10px;text-align:center}
+  .link__gap::before{align-self:stretch;border-left:0;border-top:3px dashed var(--muted)}
+}
+.points{display:grid;gap:12px;max-width:38em}
+.points li{position:relative;padding-left:20px}
+.points li::before{content:"";position:absolute;left:0;top:.74em;width:8px;height:8px;background:var(--navy)}
+
+.exps{border-bottom:1px solid var(--rule)}
+.exp{display:grid;gap:6px;padding:14px 0;border-top:1px solid var(--rule)}
+@media (min-width:700px){.exp{grid-template-columns:4.2em minmax(0,1fr) 250px;gap:18px;align-items:start}}
+.exp__no{font-family:var(--display);font-weight:700;color:var(--navy);white-space:nowrap}
+.exp__text{font-weight:500}
+.exp__res{font-size:13.5px;line-height:1.6;color:var(--muted)}
+.exp__res .state{display:table;margin:3px 0 5px}
+
+.qa{max-width:40em;border-bottom:1px solid var(--rule)}
+.qa__item{padding:16px 0;border-top:1px solid var(--rule)}
+.qa__q{font-family:var(--body);font-weight:700;font-size:16.5px;line-height:1.6}
+.qa__a{margin-top:6px}
+
+.gloss > div{display:grid;gap:4px;padding:14px 0;border-top:1px solid var(--rule)}
+.gloss > div:last-child{border-bottom:1px solid var(--rule)}
+@media (min-width:700px){.gloss > div{grid-template-columns:200px minmax(0,1fr);gap:24px}}
+.gloss dt{font-weight:700;line-height:1.6}
+.gloss dt .en{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.refs{display:grid;gap:8px;font-size:14.5px;line-height:1.7;max-width:44em}
+.author{display:grid;gap:8px}
+.author__name{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:10px;font-family:var(--display);font-weight:700;font-size:22px;line-height:1.5}
+.author__name .en{font-size:13px;font-weight:400;color:var(--muted)}
+
+.ask{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:22px}
+.ask .note{max-width:32em}
+.btn{display:inline-block;background:var(--navy);color:#fff;font-weight:700;font-size:15px;line-height:1.3;text-decoration:none;padding:12px 18px}
+.btn:hover{background:var(--review)}
+.route{border-bottom:1px solid var(--rule)}
+.route__row{display:grid;gap:6px;padding:14px 0;border-top:1px solid var(--rule)}
+@media (min-width:700px){.route__row{grid-template-columns:220px minmax(0,1fr);gap:24px}}
+.route__name{display:grid;grid-template-columns:16px minmax(0,1fr);gap:10px;align-items:start;font-weight:700;line-height:1.6}
+.route__name i{display:block;width:16px;height:16px;border-radius:2px;margin-top:5px}
+.route__name .en{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.route__text p + p{margin-top:6px}
+.tmpl{list-style:decimal;padding-left:1.6em;display:grid;gap:4px;max-width:38em}
+.steps{counter-reset:st;max-width:40em;border-bottom:1px solid var(--rule)}
+.steps li{counter-increment:st;display:grid;grid-template-columns:2em minmax(0,1fr);column-gap:10px;padding:12px 0;border-top:1px solid var(--rule)}
+.steps li::before{content:counter(st);grid-row:1/3;font-family:var(--display);font-weight:700;font-size:21px;line-height:1.35;color:var(--navy)}
+.steps b,.steps span{grid-column:2}
+.foot__links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.foot__links a{color:#fff;font-weight:700;line-height:1.3;text-decoration:none;padding:9px 13px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
+.foot__links a:hover{background:rgba(255,255,255,.12)}
+/* The AI chatbot, report and privacy sections stay closed until a footer link opens one of them. */
+.sec--extra{display:none}
+.sec--extra:target{display:block;border-top:0}
+body:has(.sec--extra:target) .hero,body:has(.sec--extra:target) .toc,body:has(.sec--extra:target) .kf,body:has(.sec--extra:target) main > .sec:not(:target){display:none}
+.back{font-size:14px;font-weight:700}
+.back a{text-decoration:none}
+.foot{background:var(--navy);color:#cfdaec;font-size:13px;line-height:1.8;padding:28px 0 36px}
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="hero__top"><span>SFC Open Research Forum 2026 展示</span><span class="pill">日本語解説</span></p>
+    <h1><span class="l">リリース前の<span class="w-solid">審査</span>、</span><span class="l">リリース後の<span class="w-hollow">救済</span>は?</span></h1>
+    <p class="hero__sub">日本のテクノロジー企業におけるAIアカウンタビリティ経路の分析</p>
+    <p class="hero__lead">AIを世に出す前の「審査」と、世に出した後に懸念を申し出て、見直しや是正を求めるための「救済への経路」。日本のテクノロジー企業18社は、この二つを公開資料にどこまで書いているのでしょうか。142の公式資料を読み比べました。</p>
+    <p class="hero__note">会場での口頭説明は英語で行います。このページでは、研究の要点を日本語で紹介しています。</p>
+    <div class="axis">
+      <span class="axis__when">リリース前</span>
+      <span class="axis__when axis__when--mid">リリース</span>
+      <span class="axis__when axis__when--end">リリース後</span>
+      <span class="axis__line axis__line--solid"></span>
+      <span class="axis__gate"></span>
+      <span class="axis__line axis__line--dashed"></span>
+      <p class="axis__cap"><b class="axis__tag axis__tag--rv">審査</b>どのAIを、誰が、何を根拠に審査し、どう判断するか</p>
+      <p class="axis__cap axis__cap--end"><b class="axis__tag axis__tag--rc">救済</b>誰が申し出ることができ、誰が見直し、どう回答し、是正するか</p>
+    </div>
+    <p class="hero__by"><b>アンジェロス・ザイミス</b><span>慶應義塾大学 総合政策学部 4年</span></p>
+    <p class="hero__en" lang="en">Review before release, recourse after? An analysis of AI accountability routes in Japanese technology firms</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="目次">
+  <div class="wrap toc__in">
+    <a href="#findings">要点</a><a href="#background">1 背景</a><a href="#questions">2 問い</a><a href="#method">3 方法</a><a href="#results">4 結果</a><a href="#conclusions">5 結論</a><a href="#expectations">6 予想と結果</a><a href="#limits">7 限界</a><a href="#faq">質問</a><a href="#glossary">用語</a><a href="#author">著者</a>
+  </div>
+</nav>
+
+
+<section class="kf" id="findings">
+  <div class="wrap">
+    <div class="kf__head"><h2>主な発見</h2><p class="note">調査した142の公式資料の範囲で</p></div>
+    <div class="kf__grid">
+      <div class="kf__item">
+        <p class="kf__num"><b>11</b>/18社</p>
+        <div class="strip" style="--n:18;" role="img" aria-label="18社中、審査が上回る11社、同数3社、経路が上回る4社"><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="tie"></i><i class="tie"></i><i class="tie"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i></div>
+        <ul class="legend"><li><i class="s-rv"></i>審査が上回る <b>11</b></li><li><i class="tie"></i>同数 <b>3</b></li><li><i class="s-rc"></i>経路が上回る <b>4</b></li></ul>
+        <p class="kf__text">リリース前の審査のほうが、リリース後に懸念を申し出るための経路(AIに結びついたもののうち最も充実した経路)よりも、多くの要素が明記されていました。事前に決めた「3分の2」の基準には、1社届きませんでした。</p>
+      </div>
+      <div class="kf__item">
+        <p class="kf__num"><b>1</b>/18社</p>
+        <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記1社、一部明記7社、確認できず10社"><i class="s-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+        <ul class="legend"><li><i class="s-nv"></i>明記 <b>1</b></li><li><i class="p-nv"></i>一部明記 <b>7</b></li><li><i class="e"></i>確認できず <b>10</b></li></ul>
+        <p class="kf__text">社外からの報告が、自社のAIを統括する組織に届くと明記していました。対象は、脆弱性とインシデントの報告に限られます。</p>
+      </div>
+      <div class="kf__item">
+        <p class="kf__num"><b>0</b>/18社</p>
+        <div class="strip" style="--n:18;" role="img" aria-label="18社中、文書化を確認できた企業は0社"><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+        <ul class="legend"><li><i class="e"></i>文書化を確認できず <b>18</b></li></ul>
+        <p class="kf__text">AIの判断に異議を申し立て、そのシステムに権限をもつ組織に見直しを求める手続きを、権限・回答・救済まで含めて文書化している企業は、見つかりませんでした。</p>
+      </div>
+    </div>
+    <p class="note kf__foot">「最も充実した経路」とは、各分析で比較の対象となる経路のうち、6つの要素が最も多く明記されていた経路のことです。実際の対応の質や、救済の得やすさを評価したものではありません。</p>
+    <p class="note">1マスが1社を表します。見出しの番号(1〜7)と、表・図の番号は、会場のポスター(英語)と同じです。</p>
+  </div>
+</section>
+
+<main>
+<section class="sec" id="background">
+  <div class="wrap sec__grid">
+    <header class="sec__head"><span class="sec__no">1</span><h2>背景</h2><span class="sec__en" lang="en">Background</span></header>
+    <div class="sec__body">
+      <p class="lede">たとえば、AIの自動判定によって、あるサービスが突然使えなくなったとします。どこに伝えればよいのでしょうか。誰が見直すのでしょうか。返事は来るのでしょうか。間違いだったら、直してもらえるのでしょうか。</p>
+      <p>大手テクノロジー企業の多くは、自社がつくるAIについての原則を公表しています。</p>
+      <p>けれども、実際に使われているAIで不利益を受けた人にとって、原則の価値は、その先に何が用意されているかで決まります(Bovens 2007; Cobbe et al. 2021)。必要なのは、次の4つです。</p>
+      <ol class="chain">
+        <li><span>1</span>懸念を伝える場所</li>
+        <li><span>2</span>見直す権限をもつ人</li>
+        <li><span>3</span>回答</li>
+        <li><span>4</span>必要な場合の是正</li>
+      </ol>
+      <p>AIガバナンスは、導入前の審査には力を注ぐ一方で、導入後の救済にはあまり力を注いでいない、と指摘されています(Pi &amp; Proctor 2025)。しかし、企業がこの二つをそれぞれどのように文書化しているのかは、これまでほとんど調べられていません。</p>
+    </div>
+  </div>
+</section>
+<section class="sec" id="questions">
+  <div class="wrap sec__grid">
+    <header class="sec__head"><span class="sec__no">2</span><h2>問い</h2><span class="sec__en" lang="en">Questions</span></header>
+    <div class="sec__body">
+      <ol class="qs">
+        <li>同じ企業の中で、リリース前の審査は、リリース後の救済よりも詳しく文書化されているか。</li>
+        <li>社外から寄せられた懸念が、その企業のAIを統括する組織に届くと、公開資料に書かれているか。</li>
+        <li>社外の人が使える経路にはどのようなものがあり、AIとどう結びつけられているか。</li>
+        <li>広島AIプロセス(HAIP)の質問票は、審査だけでなく救済についても尋ねているか。</li>
+      </ol>
+      <p>5つの予想と、その当否を判定するルールは、本格的な資料の分類作業(コーディング)を始める前に、日付を入れた計画書で確定させました。結果は「<a href="#expectations">6 事前の予想と結果</a>」にまとめています。</p>
+    </div>
+  </div>
+</section>
+<section class="sec" id="method">
+  <div class="wrap sec__grid">
+    <header class="sec__head"><span class="sec__no">3</span><h2>データと方法</h2><span class="sec__en" lang="en">Data and method</span></header>
+    <div class="sec__body">
+      <p>企業が公開している資料を対象に、審査と救済の経路を、対になった要素で読み比べました。</p>
+      <div class="flow">
+        <div class="flow__step"><b>日本のテクノロジー企業 18社</b><span>2025年にHAIP報告書を公表した9社と、比較対象の9社</span></div>
+        <i class="flow__arrow"></i>
+        <div class="flow__step"><b>全18社の公式資料 142点</b><span>各社のウェブページと報告書133点、HAIP報告書9点</span></div>
+        <i class="flow__arrow"></i>
+        <div class="flow__step"><b>審査と、すべての経路を、対になった要素でコーディング</b><span>要素ごとに「明記」「一部明記」「確認できず」のいずれかに分類</span></div>
+        <i class="flow__arrow"></i>
+        <div class="flow__step"><b>コーディングの判断 743件</b><span>1件ごとに、根拠となる資料の該当箇所、または調べた資料を記録</span></div>
+      </div>
+      <p class="note">HAIP報告書は、主となる比較には含めていません。分析対象とする資料の範囲は、2026年10月22日に確定しました。</p>
+      <h3 class="sub">3つの分類</h3>
+      <ul class="codes">
+        <li><i class="s-nv"></i><p><b>明記</b><span class="en" lang="en">stated</span>その要素が資料にはっきり書かれている。</p></li>
+        <li><i class="p-nv"></i><p><b>一部明記</b><span class="en" lang="en">partly stated</span>一部だけが明記されている、記述が曖昧である、または適用対象の一部についてのみ明記されている。</p></li>
+        <li><i class="e"></i><p><b>確認できず</b><span class="en" lang="en">not located</span>調べた資料の中に見つからなかった。</p></li>
+      </ul>
+      <p class="take">「確認できず」は、その仕組みが存在しないという意味ではありません。公開資料の中に見つからなかった、という意味です。</p>
+    </div>
+  </div>
+</section>
+<section class="sec" id="results">
+  <div class="wrap sec__grid">
+    <header class="sec__head"><span class="sec__no">4</span><h2>結果</h2><span class="sec__en" lang="en">Results</span></header>
+    <div class="sec__body">
+      <p>結果は、ポスターと同じ6つの表と図に沿って説明します。</p>
+      <p class="jump"><a href="#table-1">表1</a><a href="#figure-1">図1</a><a href="#figure-2">図2</a><a href="#table-2">表2</a><a href="#figure-3">図3</a><a href="#table-3">表3</a></p>
+
+      <article class="fig" id="table-1">
+        <header class="fig__head"><span class="fig__no">表1</span><h3>6つのペアの要素と、それぞれを明記していた企業の数</h3></header>
+        <p>審査と経路を、対になった6つの要素で比べました。4つのペアで、審査のほうが多くの企業で明記されていました。権限をもつ主体(ペア2)と、学習・フィードバック(ペア6)は、どちらの側でもほとんど明記されていません。</p>
+        <ul class="series">
+          <li><span class="tag tag--rv">審査</span>リリース前の審査。1社につき1件の記録</li>
+          <li><span class="tag tag--rc">経路</span>リリース後の救済。その企業で社外の人が使える経路のうち、AIに結びついた最も充実したもの</li>
+        </ul>
+        <ul class="legend"><li><i class="s-rv"></i><i class="s-rc"></i>明記</li><li><i class="p-rv"></i><i class="p-rc"></i>一部明記</li><li><i class="e"></i>確認できず</li><li>1マス=1社(全18社)</li></ul>
+        <div class="pairs">
+        <div class="pair">
+          <p class="pair__no">ペア1</p>
+          <div class="row">
+            <span class="tag tag--rv">審査</span>
+            <div class="row__what">
+              <p class="row__name">対象<span class="en" lang="en">Trigger</span></p>
+              <p class="row__desc">どのAI利用が審査の対象になるか</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記14社、一部明記2社、確認できず2社"><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>14</b>社が明記<span class="cnt__p">一部明記 2社</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <span class="tag tag--rc">経路</span>
+            <div class="row__what">
+              <p class="row__name">入口<span class="en" lang="en">Entry</span></p>
+              <p class="row__desc">社外の人が使える窓口と、利用できる人</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記8社、一部明記1社、確認できず9社"><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="p-rc"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>8</b>社が明記<span class="cnt__p">一部明記 1社</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="pair">
+          <p class="pair__no">ペア2</p>
+          <div class="row">
+            <span class="tag tag--rv">審査</span>
+            <div class="row__what">
+              <p class="row__name">権限をもつ審査主体<span class="en" lang="en">Reviewer with authority</span></p>
+              <p class="row__desc">名前の示された組織と、承認・条件付け・差し止めの権限</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記2社、一部明記13社、確認できず3社"><i class="s-rv"></i><i class="s-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>2</b>社が明記<span class="cnt__p">一部明記 13社</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <span class="tag tag--rc">経路</span>
+            <div class="row__what">
+              <p class="row__name">権限をもつ対応主体<span class="en" lang="en">Reviewer with authority</span></p>
+              <p class="row__desc">対応する担当と、訂正・再検討・停止の権限</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記2社、一部明記6社、確認できず10社"><i class="s-rc"></i><i class="s-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>2</b>社が明記<span class="cnt__p">一部明記 6社</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="pair">
+          <p class="pair__no">ペア3</p>
+          <div class="row">
+            <span class="tag tag--rv">審査</span>
+            <div class="row__what">
+              <p class="row__name">審査の根拠となる資料<span class="en" lang="en">Evidence for the reviewer</span></p>
+              <p class="row__desc">チェックリスト、影響評価、テスト結果</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記9社、一部明記6社、確認できず3社"><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>9</b>社が明記<span class="cnt__p">一部明記 6社</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <span class="tag tag--rc">経路</span>
+            <div class="row__what">
+              <p class="row__name">本人への情報<span class="en" lang="en">Information for the person</span></p>
+              <p class="row__desc">影響を受けた人が得られる情報</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記8社、一部明記1社、確認できず9社"><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="p-rc"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>8</b>社が明記<span class="cnt__p">一部明記 1社</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="pair">
+          <p class="pair__no">ペア4</p>
+          <div class="row">
+            <span class="tag tag--rv">審査</span>
+            <div class="row__what">
+              <p class="row__name">判断<span class="en" lang="en">Decision</span></p>
+              <p class="row__desc">審査の結論や成果物</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記12社、一部明記3社、確認できず3社"><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>12</b>社が明記<span class="cnt__p">一部明記 3社</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <span class="tag tag--rc">経路</span>
+            <div class="row__what">
+              <p class="row__name">本人への回答<span class="en" lang="en">Response to the person</span></p>
+              <p class="row__desc">結果を伴う返答</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記6社、一部明記3社、確認できず9社"><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>6</b>社が明記<span class="cnt__p">一部明記 3社</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="pair">
+          <p class="pair__no">ペア5</p>
+          <div class="row">
+            <span class="tag tag--rv">審査</span>
+            <div class="row__what">
+              <p class="row__name">独立した関与・エスカレーション<span class="en" lang="en">Independent input or escalation</span></p>
+              <p class="row__desc">プロジェクトから独立した人、または上位の階層</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記11社、一部明記3社、確認できず4社"><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>11</b>社が明記<span class="cnt__p">一部明記 3社</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <span class="tag tag--rc">経路</span>
+            <div class="row__what">
+              <p class="row__name">エスカレーション<span class="en" lang="en">Escalation</span></p>
+              <p class="row__desc">最初の担当者の先へ、または外部機関へ</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記4社、一部明記2社、確認できず12社"><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>4</b>社が明記<span class="cnt__p">一部明記 2社</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="pair">
+          <p class="pair__no">ペア6</p>
+          <div class="row">
+            <span class="tag tag--rv">審査</span>
+            <div class="row__what">
+              <p class="row__name">組織としての学習<span class="en" lang="en">Learning</span></p>
+              <p class="row__desc">審査の結果が規則や研修に反映される</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記1社、一部明記6社、確認できず11社"><i class="s-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="p-rv"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>1</b>社が明記<span class="cnt__p">一部明記 6社</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <span class="tag tag--rc">経路</span>
+            <div class="row__what">
+              <p class="row__name">組織へのフィードバック<span class="en" lang="en">Systemic feedback</span></p>
+              <p class="row__desc">寄せられた懸念がガバナンスやシステムの変更に反映される</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記2社、一部明記0社、確認できず16社"><i class="s-rc"></i><i class="s-rc"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>2</b>社が明記<span class="cnt__p">一部明記 0社</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="pair">
+          <p class="pair__no">経路のみ</p>
+          <div class="row">
+            <span class="tag tag--rc">経路</span>
+            <div class="row__what">
+              <p class="row__name">個別の救済<span class="en" lang="en">Individual remedy</span></p>
+              <p class="row__desc">訂正、再検討、補償</p>
+            </div>
+            <div class="row__viz">
+              <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記1社、一部明記6社、確認できず11社"><i class="s-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="p-rc"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+              <p class="cnt"><b>1</b>社が明記<span class="cnt__p">一部明記 6社</span></p>
+            </div>
+          </div>
+          <p class="note">審査の側に対応する要素はありません。個別の救済は、経路についてだけコーディングしました。</p>
+        </div>
+        </div>
+        <p class="note">AI専用の経路、または企業の資料がAIとの関係を明記している経路を「AIに結びついた経路」としています。</p>
+      </article>
+
+      <article class="fig" id="figure-1">
+        <header class="fig__head"><span class="fig__no">図1</span><h3>審査と、AIに結びついた最も充実した経路。明記された要素の数を企業ごとに比較</h3></header>
+        <p>審査が上回ったのは11社、経路が上回ったのは4社、同数だったのは3社です。</p>
+        <div class="marked">
+          <span class="marked__label">事前の基準 12社</span>
+          <div class="strip" style="--n:18;" role="img" aria-label="18社中、審査が上回る11社、同数3社、経路が上回る4社。事前の基準は12社"><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="tie"></i><i class="tie"></i><i class="tie"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i></div>
+        </div>
+        <ul class="legend"><li><i class="s-rv"></i>審査が上回る <b>11社</b></li><li><i class="tie"></i>同数 <b>3社</b></li><li><i class="s-rc"></i>経路が上回る <b>4社</b></li></ul>
+        <p>事前の予想は「3分の2以上、つまり18社のうち12社以上で審査が上回る」でした。結果は11社で、基準に1社届きません。この予想は、支持も棄却もされませんでした。11社は「半数超・3分の2未満」に当たり、事前の判定ルールでは、支持にも棄却にも分類されない範囲です。統計的な検定ではなく、事前に定めた記述的な判定です。</p>
+        <div class="avg" role="img" aria-label="6つの要素のうち明記されていた数の平均。審査2.72、経路1.67">
+          <div class="avg__row"><span class="avg__k">審査</span><span class="avg__track"><span class="avg__fill avg__fill--rv" style="width:45.37%"></span></span><b class="avg__v">2.72</b></div>
+          <div class="avg__row"><span class="avg__k">経路</span><span class="avg__track"><span class="avg__fill avg__fill--rc" style="width:27.78%"></span></span><b class="avg__v">1.67</b></div>
+          <div class="avg__row"><span></span><span class="avg__ticks"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></span><span></span></div>
+        </div>
+        <p class="note">6つの要素のうち、明記されていた数の平均(18社)。</p>
+        <p>18社のうち9社では、AIに結びついた社外向けの経路が確認できませんでした。その場合、経路の要素は0として数えています。</p>
+        <div class="strip" style="--n:18;" role="img" aria-label="18社中、AIに結びついた社外向けの経路を確認できたのは9社、確認できなかったのは9社"><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+        <ul class="legend"><li><i class="s-rc"></i>経路を確認 <b>9社</b></li><li><i class="e"></i>確認できず <b>9社</b>(0として計上)</li></ul>
+        <p class="note">企業ごとの内訳は、ポスターの図1(Figure 1)に示しています。</p>
+      </article>
+
+      <article class="fig" id="figure-2">
+        <header class="fig__head"><span class="fig__no">図2</span><h3>主分析と、事前に計画した11通りの感度分析</h3></header>
+        <p>主分析と、数え方や条件を変えた11通りの感度分析。この合計12通りのうち、9通りで審査が上回りました。向きが逆転した3通りは、いずれも、AIとの関係が明記されていない一般の経路も数に入れた分析です。</p>
+        <div class="strip" style="--n:12;--cell:28px" role="img" aria-label="12通りの分析のうち、審査が上回る9通り、向きが逆転3通り"><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rv"></i><i class="s-rc"></i><i class="s-rc"></i><i class="s-rc"></i></div>
+        <ul class="legend"><li><i class="s-rv"></i>審査が上回る <b>9通り</b>(主分析を含む)</li><li><i class="s-rc"></i>向きが逆転 <b>3通り</b></li><li>1マス=1通りの分析</li></ul>
+        <p class="take">AIとの関係が明記されていない一般の経路を数に入れるかどうかで、結果の向きが変わります。</p>
+        <p class="note">各分析の結果は、ポスターの図2(Figure 2)に示しています。</p>
+      </article>
+
+      <article class="fig" id="table-2">
+        <header class="fig__head"><span class="fig__no">表2</span><h3>社外からの報告は、AIを統括する組織に届くと書かれているか</h3></header>
+        <div class="strip" style="--n:18;" role="img" aria-label="18社中、明記1社、一部明記7社、確認できず10社"><i class="s-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="p-nv"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i><i class="e"></i></div>
+        <ul class="legend"><li><i class="s-nv"></i>明記 <b>1社</b></li><li><i class="p-nv"></i>一部明記 <b>7社</b></li><li><i class="e"></i>確認できず <b>10社</b></li></ul>
+        <div class="firms">
+          <div class="firm">
+            <p class="firm__name">日立製作所<span class="en" lang="en">Hitachi</span></p>
+            <p><span class="state state--s">明記</span>HAIP報告書には、AIに関する脆弱性とインシデントをAI Supervisory Committee(AIを監督する委員会)に報告する仕組みと、第三者からの報告を受け付ける公開の連絡窓口が記載されています。</p>
+          </div>
+          <div class="firm">
+            <p class="firm__name">野村総合研究所<span class="en" lang="en">NRI</span></p>
+            <p><span class="state state--p">一部明記</span>人権に関するホットラインで、AIの判断に対する異議申立てを受け付けると記載されています。ただし、個別の申立てがAIを統括する組織に届くとは明記されておらず、記載されている報告は、集計された形のものです。</p>
+          </div>
+          <div class="firm">
+            <p class="firm__name">ソフトバンク<span class="en" lang="en">SoftBank</span></p>
+            <p><span class="state state--p">一部明記</span>懸念のある案件がAI倫理委員会の委員長に報告されると、公開資料に記載されています。ただし、社外からの入口とのつながりは明記されていません。</p>
+          </div>
+        </div>
+        <p>このほか、エクサウィザーズ、富士通、三菱電機、Preferred Networks、ソニーの5社が「一部明記」でした。</p>
+        <p class="note">いずれも、公開資料から確認できた範囲での分類です。各社の実際の運用を評価するものではありません。</p>
+      </article>
+
+      <article class="fig" id="figure-3">
+        <header class="fig__head"><span class="fig__no">図3</span><h3>主分析の対象資料で見つかった71の窓口。その種類と、AIとの関係</h3></header>
+        <p>主分析の対象資料(HAIP報告書を除く)から、懸念や苦情を伝えるための窓口が71見つかりました。このうち、AI専用のもの、またはAIとの関係が明記されているものは17です。</p>
+        <div class="stack" role="img" aria-label="71の窓口のうち、AI専用またはAIとの関係を明記したものが17、それ以外が54">
+          <span class="seg seg--a" style="flex:17">17</span><span class="seg seg--z" style="flex:54">54</span>
+        </div>
+        <ul class="legend"><li><i class="sw-a"></i>AI専用、またはAIとの関係を明記 <b>17</b></li><li><i class="sw-z"></i>それ以外 <b>54</b></li></ul>
+        <p>その17の窓口のうち8つは、その企業が個人データを取り扱っている本人だけが使えるものでした。より広く社外の人に開かれていたのは3つです。</p>
+        <div class="stack" role="img" aria-label="17の窓口のうち、企業が個人データを取り扱っている本人のみが8、より広く社外の人に開かれたものが3、それ以外が6">
+          <span class="seg seg--b" style="flex:8">8</span><span class="seg seg--a" style="flex:3">3</span><span class="seg seg--z" style="flex:6">6</span>
+        </div>
+        <ul class="legend"><li><i class="sw-b"></i>企業が個人データを取り扱っている本人のみ <b>8</b></li><li><i class="sw-a"></i>より広く社外の人 <b>3</b></li><li><i class="sw-z"></i>それ以外 <b>6</b></li></ul>
+        <p>要素が3つ以上明記された経路をもつ企業は、15社ありました。その15社すべてで、最も充実した経路は、AI専用の窓口ではなく、以前からある仕組みでした。</p>
+        <div class="strip" style="--n:15;" role="img" aria-label="15社のうち、プライバシー関連の経路12社、コンプライアンスのホットライン2社、取引先向けのホットライン1社"><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k1"></i><i class="k2"></i><i class="k2"></i><i class="k3"></i></div>
+        <ul class="legend"><li><i class="k1"></i>プライバシー(個人情報)関連の経路 <b>12社</b></li><li><i class="k2"></i>コンプライアンスのホットライン <b>2社</b></li><li><i class="k3"></i>取引先向けのホットライン <b>1社</b></li></ul>
+        <p class="note">窓口の種類ごとの内訳は、ポスターの図3(Figure 3)に示しています。</p>
+      </article>
+
+      <article class="fig" id="table-3">
+        <header class="fig__head"><span class="fig__no">表3</span><h3>2025年のHAIP質問票(39問)が言及している要素</h3></header>
+        <p>広島AIプロセス(HAIP)の報告枠組みでは、企業が質問票に答える形で報告書を公表します。その質問票が、審査と経路のどの要素に触れているかを調べました。</p>
+        <div class="named">
+          <div>
+            <p class="named__head"><span class="tag tag--rv">審査</span>6つの要素のうち4つに言及</p>
+            <div class="named__group"><span class="named__k">言及あり</span><ul class="chips"><li class="chip chip--rv">対象</li><li class="chip chip--rv">審査の根拠となる資料</li><li class="chip chip--rv">判断</li><li class="chip chip--rv">独立した関与</li></ul></div>
+            <div class="named__group"><span class="named__k">言及なし</span><ul class="chips"><li class="chip chip--no">権限をもつ審査主体</li><li class="chip chip--no">組織としての学習</li></ul></div>
+          </div>
+          <div>
+            <p class="named__head"><span class="tag tag--rc">経路</span>6つの要素のうち2つに言及。インシデントと脆弱性の報告についての設問</p>
+            <div class="named__group"><span class="named__k">言及あり</span><ul class="chips"><li class="chip chip--rc">入口</li><li class="chip chip--rc">組織へのフィードバック</li></ul></div>
+            <div class="named__group"><span class="named__k">言及なし</span><ul class="chips"><li class="chip chip--no">権限をもつ対応主体</li><li class="chip chip--no">本人への情報</li><li class="chip chip--no">本人への回答</li><li class="chip chip--no">エスカレーション</li><li class="chip chip--no">個別の救済*</li></ul></div>
+          </div>
+        </div>
+        <p class="note">* 個別の救済は経路だけの要素で、6つのペアには含まれません。</p>
+        <p>39の設問のどれにも、次の8つの語は出てきません。</p>
+        <ul class="chips">
+          <li class="chip chip--no"><span lang="en">affected</span><small>影響を受ける</small></li>
+          <li class="chip chip--no"><span lang="en">complaint</span><small>苦情</small></li>
+          <li class="chip chip--no"><span lang="en">appeal</span><small>不服申立て</small></li>
+          <li class="chip chip--no"><span lang="en">redress</span><small>救済</small></li>
+          <li class="chip chip--no"><span lang="en">remedy</span><small>是正・救済</small></li>
+          <li class="chip chip--no"><span lang="en">contest</span><small>異議を唱える</small></li>
+          <li class="chip chip--no"><span lang="en">reconsider</span><small>再検討する</small></li>
+          <li class="chip chip--no"><span lang="en">grievance</span><small>苦情・不服</small></li>
+        </ul>
+        <p>審査の要素を引き出す設問は5問、経路の要素を引き出す設問は3問でした。</p>
+        <p>HAIP報告書を公表した9社について、その報告書を資料に加えると、明記された要素数の合計は、審査側で8、経路側で5増えました。「一部明記」も含めて数えると、増加は審査側で6、経路側で13となり、経路側の増加が審査側を上回りました。</p>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="sec" id="conclusions">
+  <div class="wrap sec__grid">
+    <header class="sec__head"><span class="sec__no">5</span><h2>結論</h2><span class="sec__en" lang="en">Conclusions</span></header>
+    <div class="sec__body">
+      <div class="link" role="img" aria-label="審査はAIガバナンスの文書に、救済はプライバシー、コンプライアンス、人権の経路に書かれている。二つのつながりは、ほとんど明記されていない。">
+        <div class="link__box link__box--rv"><b>審査</b><span>AIガバナンスの文書に書かれている</span></div>
+        <div class="link__gap"><span>つながりは、ほとんど明記されていない</span></div>
+        <div class="link__box link__box--rc"><b>救済</b><span>プライバシー、コンプライアンス、人権の経路に書かれている</span></div>
+      </div>
+      <ul class="points">
+        <li>審査と救済は、別々の場所に書かれています。</li>
+        <li>企業がほとんど明記していないのは、この二つのつながりです。AIの判断についての懸念が、そのシステムを変えられる人のもとに届くのかどうか、という点です。</li>
+        <li>提案(効果はまだ検証していません):企業は、経路ごとにこのつながりを明記することができます。HAIPのような枠組みは、審査と並べて、救済についても尋ねることができます。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="sec" id="expectations">
+  <div class="wrap sec__grid">
+    <header class="sec__head"><span class="sec__no">6</span><h2>事前の予想と結果</h2><span class="sec__en" lang="en">Expectations fixed in advance, and results</span></header>
+    <div class="sec__body">
+      <p>5つの予想と、その当否を判定するルールは、本格的な分類作業(コーディング)の前に確定させたものです。</p>
+      <div class="exps">
+        <div class="exp">
+          <p class="exp__no">予想1</p>
+          <p class="exp__text">3分の2以上の企業で、審査が、AIに結びついた最も充実した経路を上回る</p>
+          <p class="exp__res"><span class="state state--e">支持も棄却もされず</span>18社中11社</p>
+        </div>
+        <div class="exp">
+          <p class="exp__no">予想2</p>
+          <p class="exp__text">AIガバナンスへの引き継ぎを文書化している企業は、半数に満たない</p>
+          <p class="exp__res"><span class="state state--s">支持</span>1社。一部明記も数えると8社</p>
+        </div>
+        <div class="exp">
+          <p class="exp__no">予想3</p>
+          <p class="exp__text">要素が十分に明記された経路は、AI専用の窓口ではなく、以前からある仕組みである</p>
+          <p class="exp__res"><span class="state state--s">支持</span>15社中15社</p>
+        </div>
+        <div class="exp">
+          <p class="exp__no">予想4</p>
+          <p class="exp__text">HAIPの設問のうち、経路の要素を引き出すものは、審査の要素を引き出すものより少ない</p>
+          <p class="exp__res"><span class="state state--s">支持</span>3問に対して5問</p>
+        </div>
+        <div class="exp">
+          <p class="exp__no">予想5</p>
+          <p class="exp__text">HAIP報告書を加えると、審査の要素のほうが、経路の要素より多く増える</p>
+          <p class="exp__res"><span class="state state--p">結果は分かれた</span>9社の合計で+8に対して+5。一部明記も数えると逆転</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec" id="limits">
+  <div class="wrap sec__grid">
+    <header class="sec__head"><span class="sec__no">7</span><h2>限界</h2><span class="sec__en" lang="en">Limitations</span></header>
+    <div class="sec__body">
+      <ul class="points">
+        <li>対象は、企業が公開している情報だけです。「確認できず」とした要素も、社内には存在する可能性があります。</li>
+        <li>コーディングはすべて、1つの手順と1つのコードブックに沿って行い、読み直しも記録しました。ただし、独立した2人目のコーダーによる確認は行っていません。</li>
+        <li>18社は目的に沿って選んだ企業で、多くは情報開示に積極的です。そのため、結果を日本の産業全体に一般化することはできません。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="sec" id="faq">
+  <div class="wrap sec__grid">
+    <header class="sec__head sec__head--plain"><h2>よくある質問</h2><span class="sec__en" lang="en">Questions visitors ask</span></header>
+    <div class="sec__body">
+      <div class="qa">
+        <div class="qa__item">
+          <h3 class="qa__q">「確認できず」とされた要素は、その企業に存在しないのですか。</h3>
+          <p class="qa__a">そうとは限りません。この研究が調べたのは、企業が公開している資料だけです。公開資料に見つからなかった要素が、社内には存在する可能性があります。</p>
+        </div>
+        <div class="qa__item">
+          <h3 class="qa__q">企業には救済の仕組みがない、という結論ですか。</h3>
+          <p class="qa__a">いいえ。要素が3つ以上明記された経路をもつ企業は15社あり、その最も充実した経路は、いずれもプライバシーやコンプライアンスなど、以前からある仕組みでした。ほとんど明記されていなかったのは、そうした経路とAIガバナンスとのつながりです。</p>
+        </div>
+        <div class="qa__item">
+          <h3 class="qa__q">この結果は、日本企業全体に当てはまりますか。</h3>
+          <p class="qa__a">当てはまるとは言えません。18社は目的に沿って選んだ企業で、多くは情報開示に積極的です。日本の産業全体に一般化することはできません。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec" id="glossary">
+  <div class="wrap sec__grid">
+    <header class="sec__head sec__head--plain"><h2>用語集</h2><span class="sec__en" lang="en">Glossary</span></header>
+    <div class="sec__body">
+      <dl class="gloss">
+        <div><dt>AIガバナンス</dt><dd>AIを適切に開発し、提供し、利用するための、方針、体制、手続きの総称です。</dd></div>
+        <div><dt>アカウンタビリティ<span class="en" lang="en">accountability</span></dt><dd>自分の判断や行動について説明し、問いに答え、必要なら是正する責任のこと。「説明責任」とも訳されます。</dd></div>
+        <div><dt>審査<span class="en" lang="en">review</span></dt><dd>AIを世に出す前に、社内でリスクなどを確認し、進めてよいかを判断する手続きです。</dd></div>
+        <div><dt>救済<span class="en" lang="en">recourse</span></dt><dd>AIの判断や動作に懸念をもった人が、それを申し出て、見直し・回答・是正を求めるための窓口や手続きの全体です。このページでは、補償だけでなく、こうした手続き全体を指します。</dd></div>
+        <div><dt>経路・窓口<span class="en" lang="en">route, channel</span></dt><dd>懸念や苦情を企業に伝えるための連絡先や手続きです。プライバシー(個人情報)に関する手続き、コンプライアンスのホットライン、人権に関するホットラインなどがあります。</dd></div>
+        <div><dt>AIに結びついた経路<span class="en" lang="en">AI-linked route</span></dt><dd>AI専用の経路、または、企業の資料がAIとの関係をはっきり書いている経路です。</dd></div>
+        <div><dt>最も充実した経路</dt><dd>各分析で比較の対象となる経路のうち、6つの要素が最も多く明記されていた経路です。実際の対応の質や、救済の得やすさを評価したものではありません。</dd></div>
+        <div><dt>エスカレーション<span class="en" lang="en">escalation</span></dt><dd>最初の担当者から、上位の担当者・組織や外部機関へ、案件を引き継ぐことです。</dd></div>
+        <div><dt>コーディング</dt><dd>資料を読み、あらかじめ決めた基準に沿って、内容を分類していく分析の方法です。</dd></div>
+        <div><dt>感度分析</dt><dd>数え方や条件を変えても結論が変わらないかを確かめる分析です。</dd></div>
+        <div><dt>広島AIプロセス<span class="en" lang="en">Hiroshima AI Process, HAIP</span></dt><dd>2023年に、日本が議長国を務めたG7で始まった、AIに関する国際的なルールづくりの枠組みです。AIを開発する企業などが「国際行動規範」への取り組みを自主的に報告する「報告枠組み」が、2025年2月から、OECDのウェブサイトで運用されています(<a href="https://www.soumu.go.jp/menu_news/s-news/01tsushin06_02000309.html">総務省の報道資料</a>)。</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+<section class="sec" id="references">
+  <div class="wrap sec__grid">
+    <header class="sec__head sec__head--plain"><h2>参考文献</h2><span class="sec__en" lang="en">References</span></header>
+    <div class="sec__body">
+      <ul class="refs" lang="en">
+        <li>Bovens (2007) <cite>European Law Journal</cite> 13(4), 447–468.</li>
+        <li>Cobbe, Lee &amp; Singh (2021) <cite>Proc. ACM FAccT</cite>, 598–609.</li>
+        <li>Perset &amp; Fialho Esposito (2025) <cite>OECD Artificial Intelligence Papers</cite> 45.</li>
+        <li>Pi &amp; Proctor (2025) <cite>Cambridge Forum on AI: Law and Governance</cite> 1, e24.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="sec" id="author">
+  <div class="wrap sec__grid">
+    <header class="sec__head sec__head--plain"><h2>著者</h2><span class="sec__en" lang="en">Author</span></header>
+    <div class="sec__body">
+      <div class="author">
+        <p class="author__name">アンジェロス・ザイミス<span class="en" lang="en">Zaimis Angelos</span></p>
+        <p>慶應義塾大学 総合政策学部 4年</p>
+        <p>この研究は、著者個人による研究です。SFC Open Research Forum 2026では、マイヤー研究会の展示(κ13)で発表しています。</p>
+        <p><a href="mailto:angeloszaimis@keio.jp">angeloszaimis@keio.jp</a></p>
+        <p class="note">このページの内容は、著者の未公刊の原稿(2026年11月)に基づいています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec sec--extra" id="chatbot">
+  <div class="wrap sec__grid">
+    <header class="sec__head sec__head--plain"><h2>AIチャットボット</h2><span class="sec__en" lang="en">AI chatbot and AI disclosure</span></header>
+    <div class="sec__body">
+      <p class="back"><a href="#top">← 研究のページに戻る</a></p>
+      <p>この研究について、AIチャットボットに質問できます。アンジェロス・ザイミスの論文をもとに、AIが日本語と英語で回答します(2026年11月26日まで)。</p>
+      <div class="ask">
+        <a class="btn" href="https://www.chatbase.co/aQWqxhPVbUd1MzmxS3LBR/help" target="_blank" rel="noopener">ザイミスの研究についてAIに質問する<span aria-hidden="true"> ↗</span></a>
+      </div>
+      <h3 class="sub">AIの利用について</h3>
+      <ul class="points">
+        <li>チャットボットの回答は、AIが自動で作成します。著者が一つひとつ確認したものではなく、誤りを含むことがあります。正確な内容は、論文と著者にご確認ください。</li>
+        <li>チャットボットは、Chatbase 社のサービス上で動いています。</li>
+        <li>このページの日本語の文章は、著者の論文とポスターをもとに、AIの支援を受けて作成しました。内容についての責任は著者にあります。</li>
+        <li>回答に問題があったときは「<a href="#report">AIチャットボットの問題を報告する</a>」を、入力した内容の扱いは「<a href="#privacy">プライバシーについて</a>」をご覧ください。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="sec sec--extra" id="report">
+  <div class="wrap sec__grid">
+    <header class="sec__head sec__head--plain"><h2>AIチャットボットの問題を報告する</h2><span class="sec__en" lang="en">Report a problem with the AI chatbot</span></header>
+    <div class="sec__body">
+      <p class="back"><a href="#top">← 研究のページに戻る</a></p>
+      <p class="lede">この研究は、AIについての懸念が、権限をもつ人に届き、回答と是正につながるかを調べました。このページのAIチャットボットにも、同じ問いが当てはまります。そこで、研究で使った要素に沿って、報告の経路を書いておきます。</p>
+      <ul class="legend"><li><i class="s-rc"></i>用意している</li><li><i class="e"></i>用意できていない</li></ul>
+      <div class="route">
+        <div class="route__row">
+          <p class="route__name"><i class="s-rc"></i><span>入口<span class="en" lang="en">Entry</span></span></p>
+          <div class="route__text"><p>このチャットボットを使った方は、誰でも報告できます。回答の中で言及された企業や団体の方からの報告も受け付けます。</p><p>宛先は angeloszaimis@keio.jp、件名は「AIチャットボットの報告」としてください。</p></div>
+        </div>
+        <div class="route__row">
+          <p class="route__name"><i class="s-rc"></i><span>権限をもつ対応主体<span class="en" lang="en">Reviewer with authority</span></span></p>
+          <div class="route__text"><p>報告は、著者本人(アンジェロス・ザイミス)が読みます。著者は、チャットボットへの指示と資料を修正する権限と、チャットボットを停止する権限をもっています。</p></div>
+        </div>
+        <div class="route__row">
+          <p class="route__name"><i class="s-rc"></i><span>本人への情報<span class="en" lang="en">Information for the person</span></span></p>
+          <div class="route__text"><p>報告した方には、その回答がどの資料のどの記述に基づいていたかと、著者が何を確認したかをお伝えします。</p></div>
+        </div>
+        <div class="route__row">
+          <p class="route__name"><i class="s-rc"></i><span>本人への回答<span class="en" lang="en">Response to the person</span></span></p>
+          <div class="route__text"><p>受け取ってから7日以内に、メールで返信します。修正した場合はその内容を、修正しなかった場合はその理由をお伝えします。</p></div>
+        </div>
+        <div class="route__row">
+          <p class="route__name"><i class="e"></i><span>エスカレーション<span class="en" lang="en">Escalation</span></span></p>
+          <div class="route__text"><p>著者の対応に納得できない場合に、著者以外が再検討する手続きは、現時点では用意できていません。</p></div>
+        </div>
+        <div class="route__row">
+          <p class="route__name"><i class="s-rc"></i><span>組織へのフィードバック<span class="en" lang="en">Systemic feedback</span></span></p>
+          <div class="route__text"><p>報告をもとに、チャットボットへの指示と資料を見直します。同じ誤りがくり返されないようにするためです。</p></div>
+        </div>
+        <div class="route__row">
+          <p class="route__name"><i class="s-rc"></i><span>個別の救済<span class="en" lang="en">Individual remedy</span></span></p>
+          <div class="route__text"><p>誤りが確認できた場合は、チャットボットを修正し、訂正の内容を報告した方にお伝えします。修正で防げない場合は、チャットボットを停止します。</p></div>
+        </div>
+      </div>
+      <h3 class="sub">報告を受けたあとの手順</h3>
+      <p>著者は、このチャットボットを一人で運営しています。報告を受けたときは、次の順に対応します。</p>
+      <ol class="steps">
+        <li><b>受付</b><span>報告を受け取った日と内容を記録します。</span></li>
+        <li><b>緊急の停止</b><span>回答が企業や個人に不利益を与えるおそれがあると判断した場合は、確認が終わるまで、先にチャットボットを停止します。</span></li>
+        <li><b>事実の確認</b><span>チャットの記録が残っていれば、該当する質問と回答を探します。そのうえで、回答を論文の該当箇所と照らし合わせます。</span></li>
+        <li><b>判断</b><span>回答が論文と食い違っていないか、論文にない内容を加えていないか、企業や人について不正確または不公平な述べ方をしていないかを判断します。問題がないと判断した場合は、その理由を書き留めます。</span></li>
+        <li><b>対応</b><span>問題があった場合は、チャットボットへの指示か資料を修正し、同じ質問をして、直ったことを確かめます。修正で防げない場合は、チャットボットを停止します。</span></li>
+        <li><b>回答</b><span>報告した方に、確認したこと、判断、対応を、受け取ってから7日以内にメールで伝えます。</span></li>
+        <li><b>記録</b><span>報告の内容、判断、対応、日付を記録として残します。</span></li>
+      </ol>
+      <h3 class="sub">報告に書いていただきたいこと</h3>
+      <ol class="tmpl">
+        <li>質問した内容</li>
+        <li>AIの回答(できればそのまま)</li>
+        <li>利用した日時</li>
+        <li>問題だと思う点</li>
+        <li>返信を希望するかどうか</li>
+      </ol>
+      <div class="ask">
+        <a class="btn" href="mailto:angeloszaimis@keio.jp?subject=AI%E3%83%81%E3%83%A3%E3%83%83%E3%83%88%E3%83%9C%E3%83%83%E3%83%88%E3%81%AE%E5%A0%B1%E5%91%8A&amp;body=1.%20%E8%B3%AA%E5%95%8F%E3%81%97%E3%81%9F%E5%86%85%E5%AE%B9%3A%0A%0A2.%20AI%E3%81%AE%E5%9B%9E%E7%AD%94%28%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E3%81%9D%E3%81%AE%E3%81%BE%E3%81%BE%29%3A%0A%0A3.%20%E5%88%A9%E7%94%A8%E3%81%97%E3%81%9F%E6%97%A5%E6%99%82%3A%0A%0A4.%20%E5%95%8F%E9%A1%8C%E3%81%A0%E3%81%A8%E6%80%9D%E3%81%86%E7%82%B9%3A%0A%0A5.%20%E8%BF%94%E4%BF%A1%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%99%E3%82%8B%20/%20%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%AA%E3%81%84%0A">メールで報告する</a>
+        <p class="note">メールが開かない場合は、angeloszaimis@keio.jp 宛てに、件名「AIチャットボットの報告」でお送りください。チャットボットの公開が終わったあとも、報告は受け付けます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec sec--extra" id="privacy">
+  <div class="wrap sec__grid">
+    <header class="sec__head sec__head--plain"><h2>プライバシーについて</h2><span class="sec__en" lang="en">Privacy notice</span></header>
+    <div class="sec__body">
+      <p class="back"><a href="#top">← 研究のページに戻る</a></p>
+      <p>このページとAIチャットボットを運営しているのは、著者個人(アンジェロス・ザイミス)です。利用者の情報がどう扱われるかを説明します。</p>
+      <h3 class="sub">このページ</h3>
+      <ul class="points">
+        <li>このページには、入力フォームも、著者が設置したアクセス解析もありません。著者がこのページを通じて、閲覧者の情報を集めることはありません。</li>
+        <li>このページを開くと、ページを配信しているサービスと、文字の表示に使っている Google Fonts に、IPアドレスなどの技術的な情報が送られます。その扱いは、各社の方針によります。</li>
+      </ul>
+      <h3 class="sub">AIチャットボット</h3>
+      <ul class="points">
+        <li>チャットボットは、Chatbase 社のサービス上で動いています。入力した質問とAIの回答は Chatbase に記録され、著者が読むことができます。</li>
+        <li>記録は、誤った回答を見つけて直すため、そして、どのような質問が寄せられたかを知るために使います。研究のデータとしては使いません。</li>
+        <li>名前、連絡先、健康状態など、個人的な情報や秘密の情報は、入力しないでください。</li>
+        <li>記録は、チャットボットの公開を終えるとき(2026年11月末までを予定)に削除します。</li>
+        <li>Chatbase 社は、データを米国のサーバーに保存し、AIモデルの学習には使わないと説明しています(<a href="https://www.chatbase.co/legal/privacy">Chatbase社のプライバシーポリシー</a>)。</li>
+      </ul>
+      <h3 class="sub">メールでの報告</h3>
+      <ul class="points">
+        <li>報告のメールに書かれた内容とメールアドレスは、報告への対応と返信のためにだけ使います。</li>
+      </ul>
+      <h3 class="sub">問い合わせ</h3>
+      <ul class="points">
+        <li>記録の削除や、この説明についての問い合わせは、angeloszaimis@keio.jp までお寄せください。チャットの記録は名前と結びついていません。削除を希望するときは、利用した日時と質問の内容をお知らせください。</li>
+      </ul>
+      <p class="note">2026年11月20日 作成</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p class="foot__links"><a href="#chatbot">AIチャットボット・AIの利用について</a><a href="#report">AIの問題を報告する</a><a href="#privacy">プライバシーについて</a></p>
+    <p>SFC Open Research Forum 2026(2026年11月22日・23日)の展示にあわせて作成した日本語解説です。会場:κ13</p>
+  </div>
+</footer>
+
+</body>
+</html>
